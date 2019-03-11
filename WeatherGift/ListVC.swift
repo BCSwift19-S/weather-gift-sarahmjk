@@ -12,7 +12,7 @@ class ListVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editBarButton: UIBarButtonItem!
-    
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     var locationsArray = [String]()
     var currentPage = 0
@@ -34,12 +34,12 @@ class ListVC: UIViewController {
     @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing == true {
             editBarButton.title = "edit"
-            add.isEnabled = true
+            addBarButton.isEnabled = true
             
         }else {
             tableView.setEditing(true, animated: true)
             editBarButton.title = "done"
-            add.isEnabled = false
+            addBarButton.isEnabled = false
         }
     }
     

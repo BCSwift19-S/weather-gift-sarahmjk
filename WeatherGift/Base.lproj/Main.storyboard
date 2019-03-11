@@ -143,6 +143,7 @@
                         <viewLayoutGuide key="safeArea" id="oai-Ks-vxx"/>
                     </view>
                     <connections>
+                        <outlet property="addBarButton" destination="24G-AP-zHE" id="DXs-gk-kuh"/>
                         <outlet property="editBarButton" destination="RZd-7r-THm" id="aGH-QL-b4a"/>
                         <outlet property="tableView" destination="jtg-kN-bby" id="Uae-7N-5mc"/>
                     </connections>
