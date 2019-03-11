@@ -52,9 +52,24 @@ class PageVC: UIPageViewController {
 //extension
 extension PageVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        if let currentViewController = viewController as? DetailVC{
+            if currentViewController.currentPage < locationsArray.count-1 {
+                return createDetailVC(forPage: currentViewController.currentPage+1)
+            }
+        }
         
+        return nil
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        
+        if let currentViewController = viewController as? DetailVC{
+            if currentViewController.currentPage > 0 {
+                return createDetailVC(forPage: currentViewController.currentPage-1)
+            }
+        }
+      return nil
     }
 }
+
+
+
