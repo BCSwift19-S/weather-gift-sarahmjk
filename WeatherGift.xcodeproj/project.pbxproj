@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C0246CB223F6D1C007F5195 /* WeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0246CA223F6D1C007F5195 /* WeatherLocation.swift */; };
+		2C0246D122402066007F5195 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0246D022402066007F5195 /* Constants.swift */; };
 		2C81F93F2235D744007B97E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81F93E2235D744007B97E6 /* AppDelegate.swift */; };
 		2C81F9442235D744007B97E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C81F9422235D744007B97E6 /* Main.storyboard */; };
 		2C81F9462235D746007B97E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C81F9452235D746007B97E6 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		2C0246CA223F6D1C007F5195 /* WeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
+		2C0246D022402066007F5195 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C81F93B2235D744007B97E6 /* WeatherGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C81F93E2235D744007B97E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C81F9432235D744007B97E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				2C81F94A2235D746007B97E6 /* Info.plist */,
 				2C81F9502235D9EC007B97E6 /* DetailVC.swift */,
 				2C81F9522235E42C007B97E6 /* ListVC.swift */,
+				2C0246D022402066007F5195 /* Constants.swift */,
 			);
 			path = WeatherGift;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				2C81F9552235E637007B97E6 /* PageVC.swift in Sources */,
 				2C81F93F2235D744007B97E6 /* AppDelegate.swift in Sources */,
 				2C81F9512235D9EC007B97E6 /* DetailVC.swift in Sources */,
+				2C0246D122402066007F5195 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

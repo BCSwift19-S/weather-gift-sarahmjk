@@ -11,7 +11,6 @@ import CoreLocation
 
 class DetailVC: UIViewController {
     
-//outlets
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -20,15 +19,16 @@ class DetailVC: UIViewController {
     
     var currentPage = 0
     var locationsArray = [WeatherLocation]()
-    var locationManager : CLLocationManager!
-    var currentLocation : CLLocation!
+    var locationManager: CLLocationManager!
+    var currentLocation: CLLocation!
     
-    
-//viewdidload
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationLabel.text = locationsArray [currentPage].name
-        dateLabel.text = locationsArray[currentPage].coordinates
+        if currentPage != 0 {
+            self.locationsArray[currentPage].getWeather {
+                self.updateUserInterface()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,44 +37,67 @@ class DetailVC: UIViewController {
             getLocation()
         }
     }
+    
+    func updateUserInterface() {
+        locationLabel.text = locationsArray[currentPage].name
+        dateLabel.text = locationsArray[currentPage].coordinates
+        temperatureLabel.text = locationsArray[currentPage].currentTemp
+        summaryLabel.text = locationsArray[currentPage].currentSummary
+        currentImage.image = UIImage(named: locationsArray[currentPage].currentIcon)
+        
+    }
 }
 
-extension DetailVC : CLLocationManagerDelegate {
-    func getLocation () {
-        locationManager = CLLocationManager ()
+extension DetailVC: CLLocationManagerDelegate{
+    func getLocation() {
+        locationManager = CLLocationManager()
         locationManager.delegate = self
-        let status = CLLocationManager.authorizationStatus()
-        handleAuthourizationStatus(status: status)
     }
-    func handleAuthourizationStatus (status: CLAuthorizationStatus) {
+    
+    func handleLocationAuthorizationStatus(status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-        case .authorizedAlways, .authorizedWhenInUse :
+        case .authorizedAlways,.authorizedWhenInUse:
             locationManager.requestLocation()
         case .denied:
-            print ("I'm sorry-cannot show location")
+            print("I'm sorry - can't show location. User has not authorized it.")
         case .restricted:
-            print ("Access denied")
+            print("Access denied. Likely parental control are restricting location services in this app.")
         }
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        handleAuthourizationStatus(status: status)
+        handleLocationAuthorizationStatus(status: status)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let geoCoder = CLGeocoder()
+        var place = ""
         currentLocation = locations.last
         let currentLatitude = currentLocation.coordinate.latitude
         let currentLongitude = currentLocation.coordinate.longitude
-        let currentCoordinates = "\(currentLatitude), \(currentLongitude)"
-        print (currentCoordinates)
+        let currentCoordinates = "\(currentLatitude),\(currentLongitude)"
         dateLabel.text = currentCoordinates
+        geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
+            {placemarks, error in
+                if placemarks != nil {
+                    let placemark = placemarks?.last
+                    place = (placemark?.name)!
+                } else {
+                    print("Error retriving place. Error code: \(error!)")
+                    place = "Unknown Weather Location"
+                }
+                self.locationsArray[0].name = place
+                self.locationsArray[0].coordinates = currentCoordinates
+                self.locationsArray[0].getWeather {
+                    self.updateUserInterface()
+                }
+        })
         
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print ("did fail")
+        print("Fail to get user location.")
     }
 }
