@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0246CB223F6D1C007F5195 /* WeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0246CA223F6D1C007F5195 /* WeatherLocation.swift */; };
 		2C81F93F2235D744007B97E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81F93E2235D744007B97E6 /* AppDelegate.swift */; };
 		2C81F9442235D744007B97E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C81F9422235D744007B97E6 /* Main.storyboard */; };
 		2C81F9462235D746007B97E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C81F9452235D746007B97E6 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C0246CA223F6D1C007F5195 /* WeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
 		2C81F93B2235D744007B97E6 /* WeatherGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C81F93E2235D744007B97E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C81F9432235D744007B97E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				2C81F93E2235D744007B97E6 /* AppDelegate.swift */,
 				2C81F9422235D744007B97E6 /* Main.storyboard */,
 				2C81F9542235E637007B97E6 /* PageVC.swift */,
+				2C0246CA223F6D1C007F5195 /* WeatherLocation.swift */,
 				2C81F9452235D746007B97E6 /* Assets.xcassets */,
 				2C81F9472235D746007B97E6 /* LaunchScreen.storyboard */,
 				2C81F94A2235D746007B97E6 /* Info.plist */,
@@ -83,7 +86,6 @@
 				BADA980F20C3D05AE551D2B1 /* Pods-WeatherGift.debug.xcconfig */,
 				CC41AD781B386AE8785DB72D /* Pods-WeatherGift.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -240,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0246CB223F6D1C007F5195 /* WeatherLocation.swift in Sources */,
 				2C81F9532235E42C007B97E6 /* ListVC.swift in Sources */,
 				2C81F9552235E637007B97E6 /* PageVC.swift in Sources */,
 				2C81F93F2235D744007B97E6 /* AppDelegate.swift in Sources */,
