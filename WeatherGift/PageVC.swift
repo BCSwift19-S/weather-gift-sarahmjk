@@ -2,7 +2,7 @@
 //  PageVC.swift
 //  WeatherGift
 //
-//  Created by Sarah Minji Kim on 3/10/19.
+//  Created by Sarah Minji Kim on 3/6/19.
 //  Copyright © 2019 Sarah Minji Kim. All rights reserved.
 //
 
@@ -24,10 +24,9 @@ class PageVC: UIPageViewController {
         delegate = self
         dataSource = self
         
-        let newLocation = WeatherLocation()
-        newLocation.name = ""
+        let newLocation = WeatherLocation(name: "", coordinates: "")
         locationsArray.append(newLocation)
-        
+        loadLocations()
         setViewControllers([createDetailVC(forPage: 0)], direction: .forward, animated: false, completion: nil)
     }
     
@@ -37,6 +36,19 @@ class PageVC: UIPageViewController {
         configureListButton()
     }
     
+    func loadLocations() {
+        guard let locationsEncoded = UserDefaults.standard.value(forKey: "locationsArray") as? Data else {
+            print("Could not load locationsArray data from UserDefaults.")
+            return
+        }
+        let decoder = JSONDecoder()
+        if let locationsArray = try? decoder.decode(Array.self, from: locationsEncoded) as [WeatherLocation] {
+            self.locationsArray = locationsArray
+        } else {
+            print("ERROR: Coudln't decode data read from UserDefaults.")
+        }
+    }
+    
     
     // MARK:- UI Configuration Methods
     func configurePageControl() {
@@ -44,7 +56,7 @@ class PageVC: UIPageViewController {
         let pageControlWidth: CGFloat = view.frame.width - (barButtonWidth * 2)
         
         let safeHeight = view.frame.height - view.safeAreaInsets.bottom
-
+        
         pageControl = UIPageControl(frame: CGRect(x: (view.frame.width - pageControlWidth) / 2, y: safeHeight - pageControlHeight, width: pageControlWidth, height: pageControlHeight))
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
@@ -84,7 +96,10 @@ class PageVC: UIPageViewController {
         pageControl.numberOfPages = locationsArray.count
         pageControl.currentPage = currentPage
         setViewControllers([createDetailVC(forPage: currentPage)], direction: .forward, animated: false, completion: nil)
-}
+    }
+    
+    
+    
     //MARK:- Create View Controller for UIPageViewController
     func createDetailVC(forPage page:Int) -> DetailVC {
         currentPage = min(max(0,page), locationsArray.count-1)
@@ -134,3 +149,4 @@ extension PageVC: UIPageViewControllerDataSource,UIPageViewControllerDelegate {
         }
     }
 }
+

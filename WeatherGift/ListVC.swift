@@ -1,3 +1,11 @@
+//
+//  ListVC.swift
+//  WeatherGift
+//
+//  Created by Sarah Minji Kim on 3/6/19.
+//  Copyright © 2019 Sarah Minji Kim. All rights reserved.
+//
+
 import UIKit
 import GooglePlaces
 
@@ -20,8 +28,17 @@ class ListVC: UIViewController {
         if segue.identifier == "ToPageVC" {
             let destination = segue.destination as! PageVC
             currentPage = (tableView.indexPathForSelectedRow?.row)!
-            destination.locationsArray = locationsArray
             destination.currentPage = currentPage
+            destination.locationsArray = locationsArray
+        }
+    }
+    
+    func saveLocations() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(locationsArray) {
+            UserDefaults.standard.set(encoded, forKey: "locationsArray")
+        } else {
+            print("ERROR: Savingn encoded did not work")
         }
     }
     
@@ -42,9 +59,7 @@ class ListVC: UIViewController {
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
     }
-    
 }
-
 
 extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,11 +72,12 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    //MARK:- tableview Editing Functions
+    //MARK:- tableView Editing Functions
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             locationsArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveLocations()
         }
     }
     
@@ -69,48 +85,33 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         let itemToMove = locationsArray[sourceIndexPath.row]
         locationsArray.remove(at: sourceIndexPath.row)
         locationsArray.insert(itemToMove, at: destinationIndexPath.row)
+        saveLocations()
     }
     
-    //MARK:-  tableView methods to freeze the first cell
+    //MARK:- tableView methods to freeze the first cell
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        //        if indexPath.row != 0 {
-        //            return true
-        //        } else {
-        //            return false
-        //        }
         return (indexPath.row != 0 ? true : false)
     }
+    
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        //        if indexPath.row != 0 {
-        //            return true
-        //        } else {
-        //            return false
-        //        }
         return (indexPath.row != 0 ? true : false)
     }
     
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        //        if proposedDestinationIndexPath.row == 0 {
-        //            return sourceIndexPath
-        //        } else {
-        //            return proposedDestinationIndexPath
-        //        }
         return (proposedDestinationIndexPath.row == 0 ? sourceIndexPath : proposedDestinationIndexPath)
     }
     
-    func updateTable(place: GMSPlace) {
-        let newIndexPath =  IndexPath(row: locationsArray.count , section: 0)
-        var newWeatherLocation = WeatherLocation()
-        newWeatherLocation.name = place.name!
-        let longitude = place.coordinate.longitude
+    func updateTable(place: GMSPlace){
+        let newIndexPath = IndexPath(row: locationsArray.count, section: 0)
         let latitude = place.coordinate.latitude
-        newWeatherLocation.coordinates = "\(latitude),\(longitude)"
-        print(newWeatherLocation.coordinates)
+        let longitude = place.coordinate.longitude
+        let newCoordinates = "\(latitude),\(longitude)"
+        let newWeatherLocation = WeatherLocation(name: place.name!, coordinates: newCoordinates)
         locationsArray.append(newWeatherLocation)
         tableView.insertRows(at: [newIndexPath], with: .automatic)
+        saveLocations()
     }
 }
-
 
 extension ListVC: GMSAutocompleteViewControllerDelegate {
     
